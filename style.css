@@ -1,0 +1,150 @@
+/* Base styling */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background-color: #F5F5F5;
+}
+
+/* Outer background */
+.page {
+    background-color: #D8E9F2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Container */
+.container {
+    width: 420px;
+    background-color: #D8E9F2;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 22px;
+    color: #1F2D3D;
+    margin-bottom: 20px;
+}
+
+/* Main card */
+.card {
+    background-color: #F2F6FA;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.05);
+}
+
+/* Section titles */
+.section-title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #1F2D3D;
+}
+
+/* Upload section */
+.upload-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 15px 0;
+}
+
+input[type="file"] {
+    background-color: #fff;
+    border: 1px solid #C7D3E0;
+    border-radius: 4px;
+    padding: 4px;
+    flex: 1;
+}
+
+.detect-btn {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.detect-btn:hover {
+    background-color: #3F7DD0;
+}
+
+/* Detection result box */
+.result-box {
+    background-color: #E5EDF4;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.result-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.image-box {
+    background-color: #D9DEE4;
+    height: 140px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+}
+
+.not-detected {
+    background-color: #D9DEE4;
+    border-radius: 6px;
+    text-align: center;
+    padding: 35px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Ask section */
+.ask-section input {
+    flex: 1;
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #C7D3E0;
+    font-size: 13px;
+}
+
+.input-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.submit-btn {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background-color: #3F7DD0;
+}
+
+/* Answer box */
+.answer-box {
+    background-color: #E0EDFA;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 15px;
+}
+
+.answer-text {
+    font-size: 12.5px;
+    color: #1F2D3D;
+    margin-top: 5px;
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Stone AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="page">
+        <div class="container">
+            <h1>Kidney Stone AI</h1>
+            
+            <div class="card">
+                <label class="section-title">Upload CT Scan Image</label>
+                <div class="upload-section">
+                    <input type="file" id="fileUpload">
+                    <button class="detect-btn">Upload & Detect</button>
+                </div>
+
+                <div class="result-box">
+                    <!-- State 1 (Detected) -->
+                    <!-- <div class="detected">
+                        <p class="result-title">Detection Results</p>
+                        <div class="image-box">
+                            <img src="detected.png" alt="Detected area">
+                        </div>
+                    </div> -->
+
+                    <!-- State 2 (Not Detected) -->
+                    <div class="not-detected">
+                        <p>No kidney stone detected</p>
+                    </div>
+                </div>
+
+                <div class="ask-section">
+                    <p class="section-title">Ask About Kidney Stones</p>
+                    <div class="input-row">
+                        <input type="text" placeholder="Type your question here...">
+                        <button class="submit-btn">Submit</button>
+                    </div>
+                </div>
+
+                <div class="answer-box">
+                    <p class="section-title">Answer</p>
+                    <div class="answer-text">
+                        AI will display kidney stone information here...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
