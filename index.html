@@ -8,14 +8,23 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="nav-logo">
+        <i class="fas fa-kidneys"></i>
+        <h1>Kidney Stone AI</h1>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main App -->
   <div class="app-container">
     <!-- Step 1: Upload -->
     <div class="step upload-step active" id="uploadStep">
       <div class="card">
-        <div class="header">
-          <h2>Kidney Stone AI</h2>
-        </div>
-        <p>Upload a CT scan image and let our AI help identify possible kidney stones.</p>
+        <h2>Upload CT Scan</h2>
+        <p>Drag & drop your CT scan image or click to browse.</p>
         <div class="upload-box" id="uploadBox">
           <i class="fas fa-cloud-upload-alt"></i>
           <p>Drag & drop an image here</p>
@@ -29,18 +38,17 @@
     <!-- Step 2: Preview -->
     <div class="step preview-step" id="previewStep">
       <div class="card">
-        <div class="header">
+        <div class="header-actions">
           <button class="btn back" onclick="goBack('uploadStep')">
             <i class="fas fa-arrow-left"></i> Back
           </button>
-          <h2>Kidney Stone AI</h2>
+          <h2>Preview CT Scan</h2>
         </div>
-        <p>Review your uploaded CT scan before analysis.</p>
         <div class="preview-box">
           <img id="previewImage" alt="CT Scan Preview" />
           <div class="preview-actions">
             <button class="btn outline" onclick="replaceImage()">Replace Image</button>
-            <button class="btn primary" onclick="analyzeImage()">Upload & Analyze</button>
+            <button class="btn primary" onclick="analyzeImage()">Analyze Now</button>
           </div>
         </div>
       </div>
@@ -49,21 +57,19 @@
     <!-- Step 3: Result -->
     <div class="step result-step" id="resultStep">
       <div class="card">
-        <div class="header">
+        <div class="header-actions">
           <button class="btn back" onclick="goBack('previewStep')">
             <i class="fas fa-arrow-left"></i> Back
           </button>
-          <h2>Kidney Stone AI</h2>
+          <h2>Analysis Result</h2>
         </div>
         <div class="result-content">
-          <!-- Foto CT scan ditampilkan kembali -->
           <div class="result-image-box">
             <img id="resultImage" alt="Analyzed CT Scan" />
           </div>
-          <!-- Penjelasan di bawah -->
           <div class="result-details">
             <div class="result-icon">
-              <i class="fas fa-vial"></i>
+              <i class="fas fa-check-circle"></i>
             </div>
             <h3 id="resultTitle">Kidney stone detected.</h3>
             <p id="resultText">The uploaded CT scan shows indications of kidney stone formation. Further clinical evaluation is recommended.</p>
@@ -77,10 +83,10 @@
       </div>
     </div>
 
-    <!-- Step 4: Chat Assistant (Optional) -->
+    <!-- Step 4: Chat Assistant -->
     <div class="step chat-step" id="chatStep">
       <div class="card">
-        <div class="header">
+        <div class="header-actions">
           <button class="btn back" onclick="goBack('resultStep')">
             <i class="fas fa-arrow-left"></i> Back
           </button>
@@ -110,7 +116,11 @@
     </div>
   </div>
 
+  <!-- Background Decoration -->
+  <div class="decoration-bg"></div>
+
   <script>
+    // Sama seperti sebelumnya — tidak berubah
     const uploadStep = document.getElementById('uploadStep');
     const previewStep = document.getElementById('previewStep');
     const resultStep = document.getElementById('resultStep');
@@ -127,7 +137,6 @@
       fileInput.click();
     });
 
-    // Drag & drop
     const uploadBox = document.getElementById('uploadBox');
     uploadBox.addEventListener('dragover', (e) => {
       e.preventDefault();
@@ -164,7 +173,6 @@
       showLoading();
       setTimeout(() => {
         hideLoading();
-        // Simpan gambar ke result
         resultImage.src = previewImage.src;
 
         const reports = [
