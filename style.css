@@ -51,7 +51,7 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* === Card === */
+/* === Card & Header === */
 .card {
   background: var(--card-bg);
   border-radius: var(--radius);
@@ -72,17 +72,44 @@ body {
   z-index: 1;
 }
 
-.card h2 {
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.header h2 {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 12px;
   color: var(--text);
+  flex: 1;
+  text-align: center;
+}
+
+.btn.back {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn.back:hover {
+  background: rgba(67, 97, 238, 0.08);
 }
 
 .card p {
   color: var(--text-light);
   margin-bottom: 20px;
   line-height: 1.6;
+  text-align: center;
 }
 
 /* === Upload Box === */
@@ -124,26 +151,20 @@ body {
   display: none;
 }
 
-/* === Preview Box === */
-.preview-box {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.preview-box img {
+/* === Preview & Result Image Box === */
+.preview-box img,
+.result-image-box img {
   max-width: 100%;
-  max-height: 300px;
+  max-height: 280px;
   object-fit: contain;
   border-radius: var(--radius);
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
   margin-bottom: 20px;
 }
 
-.preview-actions {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-  flex-wrap: wrap;
+.result-image-box {
+  margin-bottom: 24px;
+  text-align: center;
 }
 
 /* === Buttons === */
@@ -197,32 +218,21 @@ body {
 /* === Result Content === */
 .result-content {
   text-align: center;
-  padding: 30px 0;
 }
 
 .result-icon {
-  font-size: 3rem;
+  font-size: 2.5rem;
   color: var(--success);
-  margin-bottom: 20px;
+  margin: 16px 0;
 }
 
-.result-icon i {
-  animation: bounce 1s infinite;
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-20px); }
-  60% { transform: translateY(-10px); }
-}
-
-.result-content h3 {
-  font-size: 1.5rem;
-  margin-bottom: 16px;
+.result-details h3 {
+  font-size: 1.4rem;
+  margin: 12px 0;
   color: var(--text);
 }
 
-.result-content p {
+.result-details p {
   color: var(--text-light);
   line-height: 1.6;
   margin-bottom: 20px;
@@ -350,6 +360,7 @@ body {
   height: 100%;
   background: rgba(255, 255, 255, 0.9);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 9999;
@@ -362,6 +373,12 @@ body {
   border-top: 4px solid var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+#globalLoader p {
+  color: var(--primary);
+  font-weight: 600;
 }
 
 @keyframes spin {
@@ -375,7 +392,7 @@ body {
     padding: 20px 16px;
   }
 
-  .card h2 {
+  .header h2 {
     font-size: 1.3rem;
   }
 
@@ -387,8 +404,9 @@ body {
     font-size: 2.5rem;
   }
 
-  .preview-box img {
-    max-height: 250px;
+  .preview-box img,
+  .result-image-box img {
+    max-height: 220px;
   }
 
   .btn {
@@ -413,5 +431,9 @@ body {
 
   .message {
     max-width: 100%;
+  }
+
+  .result-icon {
+    font-size: 2rem;
   }
 }
