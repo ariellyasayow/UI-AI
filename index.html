@@ -1,54 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kidney Stone AI</title>
+    <title>Kidney Stone AI - Medical Analysis</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page">
-        <div class="container">
+    <div class="container">
+        <div class="header">
+            <div class="logo">🩺</div>
             <h1>Kidney Stone AI</h1>
-            
-            <div class="card">
-                <label class="section-title">Upload CT Scan Image</label>
-                <div class="upload-section">
-                    <input type="file" id="fileUpload">
-                    <button class="detect-btn">Upload & Detect</button>
-                </div>
+            <p class="subtitle">Advanced CT scan analysis powered by artificial intelligence</p>
+        </div>
 
-                <div class="result-box">
-                    <!-- State 1 (Detected) -->
-                    <!-- <div class="detected">
-                        <p class="result-title">Detection Results</p>
-                        <div class="image-box">
-                            <img src="detected.png" alt="Detected area">
-                        </div>
-                    </div> -->
-
-                    <!-- State 2 (Not Detected) -->
-                    <div class="not-detected">
-                        <p>No kidney stone detected</p>
-                    </div>
-                </div>
-
-                <div class="ask-section">
-                    <p class="section-title">Ask About Kidney Stones</p>
-                    <div class="input-row">
-                        <input type="text" placeholder="Type your question here...">
-                        <button class="submit-btn">Submit</button>
-                    </div>
-                </div>
-
-                <div class="answer-box">
-                    <p class="section-title">Answer</p>
-                    <div class="answer-text">
-                        AI will display kidney stone information here...
-                    </div>
-                </div>
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">☁️</div>
+                <div class="upload-text">Drop your CT scan here</div>
+                <div class="upload-subtext">or click to browse files</div>
+                <button class="browse-btn" onclick="document.getElementById('fileInput').click()">
+                    <span style="position: relative; z-index: 1;">Select File</span>
+                </button>
+                <input type="file" id="fileInput" accept="image/*">
             </div>
         </div>
+
+        <!-- Result Section with Chatbot -->
+        <div class="result-section" id="resultSection">
+            <div class="image-preview-container">
+                <img id="previewImg" class="preview-img" alt="Uploaded CT Scan">
+            </div>
+
+            <!-- Chatbot -->
+            <div class="chatbot-container">
+                <div class="chat-header">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="chat-title">
+                        <h3>AI Medical Assistant</h3>
+                        <p>Analysis complete • Ready to answer questions</p>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages"></div>
+
+                <div class="message ai typing-indicator" id="typingIndicator">
+                    <div class="message-avatar">🤖</div>
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <input 
+                        type="text" 
+                        class="chat-input" 
+                        id="chatInput" 
+                        placeholder="Ask me anything about your scan..."
+                    >
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+                </div>
+            </div>
+
+            <button class="new-scan-btn" onclick="resetApp()">🔄 Upload New Scan</button>
+        </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
