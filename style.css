@@ -3,7 +3,7 @@
   --dark-burgundy: #4C0E19;
   --wine-red: #7B1E2B;
   --soft-pink: #D3A5B3;
-  --light-gray: #EDEDED;
+  --light-gray: #F8F3F3;
   --pure-white: #FFFFFF;
   --muted-dark-gray: #2B2B2B;
   --border: #ddd;
@@ -21,10 +21,14 @@
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background: linear-gradient(135deg, #f9f7f5 0%, #f0ebeb 100%);
+  /* Background gradien maroon lembut + ilustrasi ginjal */
+  background: linear-gradient(135deg, #f8f0f0 0%, #f0e6e6 100%);
   background-image: 
-    radial-gradient(circle at 20% 20%, rgba(211, 165, 179, 0.05) 0%, transparent 20%),
-    radial-gradient(circle at 80% 80%, rgba(123, 30, 43, 0.03) 0%, transparent 20%);
+    radial-gradient(circle at 10% 20%, rgba(123, 30, 43, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(123, 30, 43, 0.02) 0%, transparent 50%),
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGQkQyRDgiIHN0cm9rZS13aWR0aD0iMSI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5NSIgc3Ryb2tlPSIjN0IxRTJCQkYiIC8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI4MCIgc3Ryb2tlPSIjN0IxRTJCQkYiIC8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI2NSIgc3Ryb2tlPSIjN0IxRTJCQkYiIC8+PC9zdmc+') 98% 98% no-repeat,
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGQkQyRDgiIHN0cm9rZS13aWR0aD0iMSI+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI5NSIgc3Ryb2tlPSIjN0IxRTJCQkYiIC8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI4MCIgc3Ryb2tlPSIjN0IxRTJCQkYiIC8+PGNpcmNsZSBjeD0iMTAwIiBjeT0iMTAwIiByPSI2NSIgc3Ryb2tlPSIjN0IxRTJCQkYiIC8+PC9zdmc+') 2% 2% no-repeat;
+  background-size: 150px, 150px, 80px, 80px;
   color: var(--muted-dark-gray);
   min-height: 100vh;
   padding: 0;
@@ -32,14 +36,16 @@ body {
   overflow-x: hidden;
 }
 
-/* === Navbar === */
+/* === Navbar (Seragam dengan Chatbot Header) === */
 .navbar {
-  background: var(--pure-white);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  padding: 16px 0;
+  background: var(--dark-burgundy);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 14px 0;
   position: sticky;
   top: 0;
   z-index: 100;
+  color: var(--pure-white);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Garis tipis putih */
 }
 
 .nav-content {
@@ -58,13 +64,14 @@ body {
 
 .nav-logo i {
   font-size: 1.6rem;
-  color: var(--dark-burgundy);
+  color: var(--pure-white);
 }
 
 .nav-logo h1 {
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--dark-burgundy);
+  color: var(--pure-white);
+  margin: 0;
 }
 
 /* === App Container === */
@@ -104,7 +111,6 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
-/* Border gradien halus di card */
 .card::before {
   content: '';
   position: absolute;
@@ -122,14 +128,14 @@ body {
   z-index: 1;
 }
 
-/* Ilustrasi ginjal transparan di sudut card */
+/* Ilustrasi ginjal mini di sudut card */
 .card::after {
   content: '';
   position: absolute;
   top: 20px;
   right: 20px;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjRDNBNUIzIj4KPGNpcmNsZSBjeD0iNTAiIGN5PSI1MCIgcj0iNDUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0QzQTVCMiIgc3Ryb2tlLXdpZHRoPSIyIiAvPgo8cGF0aCBkPSJNNTAgMzAgTDYwIDUwIEw1MCA3MCBMNDAgNTAgWiIgZmlsbD0iI0QzQTVCMiIgLz4KPC9zdmc+') no-repeat;
   opacity: 0.05;
   pointer-events: none;
@@ -169,7 +175,7 @@ body {
 }
 
 .card p {
-  color: var(--text-light);
+  color: var(--muted-dark-gray);
   margin-bottom: 20px;
   line-height: 1.6;
 }
@@ -213,7 +219,7 @@ body {
   display: none;
 }
 
-/* === Preview & Result Image Box === */
+/* === Preview & Result === */
 .preview-box img,
 .result-image-box img {
   max-width: 100%;
@@ -228,6 +234,44 @@ body {
 .result-image-box {
   margin-bottom: 24px;
   text-align: center;
+}
+
+.result-content {
+  text-align: center;
+}
+
+.result-icon {
+  font-size: 2.5rem;
+  color: var(--wine-red);
+  margin: 16px 0;
+}
+
+.result-icon .fa-check-circle {
+  color: #2e7d32;
+}
+
+.result-details h3 {
+  font-size: 1.4rem;
+  margin: 12px 0;
+  color: var(--muted-dark-gray);
+}
+
+.result-details p {
+  color: var(--muted-dark-gray);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-size: 1.05rem;
+}
+
+.confidence-badge {
+  display: inline-block;
+  background: rgba(123, 30, 43, 0.15);
+  color: var(--wine-red);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
 }
 
 /* === Buttons === */
@@ -299,41 +343,6 @@ body {
   transform: translateY(-2px);
 }
 
-/* === Result Content === */
-.result-content {
-  text-align: center;
-}
-
-.result-icon {
-  font-size: 2.5rem;
-  color: var(--wine-red);
-  margin: 16px 0;
-}
-
-.result-details h3 {
-  font-size: 1.4rem;
-  margin: 12px 0;
-  color: var(--muted-dark-gray);
-}
-
-.result-details p {
-  color: var(--text-light);
-  line-height: 1.6;
-  margin-bottom: 20px;
-  font-size: 1.05rem;
-}
-
-.confidence-badge {
-  display: inline-block;
-  background: rgba(123, 30, 43, 0.15);
-  color: var(--wine-red);
-  padding: 6px 14px;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 0.9rem;
-  margin-bottom: 20px;
-}
-
 .action-buttons {
   display: flex;
   gap: 12px;
@@ -341,17 +350,90 @@ body {
   flex-wrap: wrap;
 }
 
-/* === Chat Container === */
-.chat-container {
+/* === Floating Chatbot Button === */
+.chatbot-fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dark-burgundy), var(--wine-red));
+  color: white;
+  border: none;
+  box-shadow: 0 6px 20px rgba(123, 30, 43, 0.4);
+  cursor: pointer;
+  font-size: 1.2rem;
   display: flex;
-  flex-direction: column;
-  height: 400px;
-  background: var(--pure-white);
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid var(--border);
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
+.chatbot-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(123, 30, 43, 0.5);
+}
+
+/* === Chatbot Sidebar (Smooth Slide-in + Seragam Header) === */
+.chatbot-sidebar {
+  position: fixed;
+  top: 0;
+  right: -450px;
+  width: 450px;
+  height: 100vh;
+  background: white;
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  /* Animasi lebih smooth */
+  transition: right 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.chatbot-sidebar.active {
+  right: 0;
+}
+
+/* Header chatbot — SERAGAM DENGAN NAVBAR */
+.chatbot-header {
+  padding: 14px 20px; /* Sama tinggi dengan navbar */
+  background: var(--dark-burgundy);
+  color: var(--pure-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Garis tipis seperti navbar */
+  box-shadow: none; /* Hilangkan shadow agar menyatu */
+}
+
+.chatbot-header h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.close-chat {
+  background: none;
+  border: none;
+  color: var(--pure-white);
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.close-chat:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Chat Messages */
 .chat-messages {
   flex: 1;
   padding: 20px;
@@ -365,7 +447,7 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  max-width: 80%;
+  max-width: 85%;
 }
 
 .message.ai {
@@ -396,7 +478,7 @@ body {
 }
 
 .message.ai .bubble {
-  background: var(--light-gray);
+  background: #f1f1f1;
   color: var(--muted-dark-gray);
 }
 
@@ -408,32 +490,36 @@ body {
 .chat-input {
   display: flex;
   gap: 8px;
-  padding: 12px 16px;
-  background: var(--pure-white);
+  padding: 16px;
+  background: white;
   border-top: 1px solid var(--border);
 }
 
 .chat-input input {
   flex: 1;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 24px;
   font-size: 0.95rem;
   outline: none;
 }
 
 .chat-input button {
-  padding: 10px 14px;
-  background: var(--dark-burgundy);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--wine-red);
   color: white;
   border: none;
-  border-radius: 12px;
   cursor: pointer;
-  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
 }
 
 .chat-input button:hover {
-  background: var(--wine-red);
+  background: var(--dark-burgundy);
 }
 
 /* === Loading Overlay === */
@@ -471,19 +557,19 @@ body {
   100% { transform: rotate(360deg); }
 }
 
-/* === Background Decoration === */
-.decoration-bg {
+/* === Dekorasi Organik Merah Maroon === */
+body::before {
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
   pointer-events: none;
+  z-index: -1;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(211, 165, 179, 0.05) 0%, transparent 20%),
-    radial-gradient(circle at 90% 80%, rgba(123, 30, 43, 0.03) 0%, transparent 20%),
-    linear-gradient(135deg, rgba(211, 165, 179, 0.02) 0%, transparent 50%);
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzRCMEUxOSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjQiPgo8cGF0aCBkPSJNMCwwIEw1LDUgTDAsMTAgTDUsMTUgTDAsMjAgTDUsMjUgTDAsMzAgTDUsMzUgTDAsNDAgTDUsNDUgTDAsNTAgTDUsNTUgTDAsNjAgTDUsNjUgTDAsNzAgTDUsNzUgTDAsODAgTDUsODUgTDAsOTAgTDUsOTUgTDAsMTAwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIC8+CjxwYXRoIGQ9Ik0xMDAsMCBMOTUsNSBMMTAwLDEwIEw5NSwxNSBMMTAwLDIwIEw5NSwyNSBMMTAwLDMwIEw5NSwzNSBMMTAwLDQwIEw5NSw0NSBMMTAwLDUwIEw5NSw1NSBMMTAwLDYwIEw5NSw2NSBMMTAwLDcwIEw5NSw3NSBMMTAwLDgwIEw5NSw4NSBMMTAwLDkwIEw5NSw5NSBMMTAwLDEwMCIgc3Ryb2tlLXdpZHRoPSIzIiBmaWxsPSJub25lIiAvPgo8L3N2Zz4=') repeat,
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzRCMEUxOSIgc3Ryb2tlLXdpZHRoPSIxIiBvcGFjaXR5PSIwLjQiPgo8cGF0aCBkPSJNMCwxMDAgTDUsOTUgTDAsOTAgTDUsODUgTDAsODAgTDUsNzUgTDAsNzAgTDUsNjUgTDAsNjAgTDUsNTUgTDAsNTAgTDUsNDUgTDAsNDAgTDUsMzUgTDAsMzAgTDUsMjUgTDAsMjAgTDUsMTUgTDAsMTAgTDUsNSBMOCwwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIC8+CjxwYXRoIGQ9Ik0xMDAsMTAwIEw5NSw5NSBMMTAwLDkwIEw5NSw4NSBMMTAwLDgwIEw5NSw3NSBMMTAwLDcwIEw5NSw2NSBMMTAwLDYwIEw5NSw1NSBMMTAwLDUwIEw5NSw0NSBMMTAwLDQwIEw5NSwzNSBMMTAwLDMwIEw5NSwyNSBMMTAwLDIwIEw5NSwxNSBMMTAwLDEwIEw5NSw1IEw5MiwwIiBzdHJva2Utd2lkdGg9IjMiIGZpbGw9Im5vbmUiIC8+Cjwvc3ZnPg==') repeat;
 }
 
 /* === Responsive === */
@@ -527,7 +613,12 @@ body {
     max-height: 220px;
   }
 
-  .chat-container {
-    height: 350px;
+  .chatbot-sidebar {
+    width: 100%;
+    right: -100%;
+  }
+
+  .chatbot-sidebar.active {
+    right: 0;
   }
 }

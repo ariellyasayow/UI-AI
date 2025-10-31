@@ -69,63 +69,51 @@
           </div>
           <div class="result-details">
             <div class="result-icon">
-              <i class="fas fa-check-circle"></i>
+              <i class="fas fa-exclamation-triangle"></i>
             </div>
-            <h3 id="resultTitle">Kidney stone detected.</h3>
-            <p id="resultText">The uploaded CT scan shows indications of kidney stone formation. Further clinical evaluation is recommended.</p>
-            <div class="confidence-badge">Confidence: <span id="confidence">92%</span></div>
+            <h3 id="resultTitle">Analyzing...</h3>
+            <p id="resultText">Please wait while AI processes your scan.</p>
+            <div class="confidence-badge">Confidence: <span id="confidence">—</span></div>
           </div>
           <div class="action-buttons">
             <button class="btn outline" onclick="resetToUpload()">Upload New Image</button>
-            <button class="btn success" onclick="openChatAssistant()">💬 AI Health Assistant</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Step 4: Chat Assistant -->
-    <div class="step chat-step" id="chatStep">
-      <div class="card">
-        <div class="header-actions">
-          <button class="btn back" onclick="goBack('resultStep')">
-            <i class="fas fa-arrow-left"></i> Back
-          </button>
-          <h2>AI Kidney Health Assistant</h2>
-        </div>
-        <div class="chat-container">
-          <div class="chat-messages">
-            <div class="message ai">
-              <div class="avatar"><i class="fas fa-robot"></i></div>
-              <div class="bubble">Hello! I’m your AI Kidney Health Assistant. How can I help you today?</div>
-            </div>
-            <div class="message user">
-              <div class="avatar"><i class="fas fa-user"></i></div>
-              <div class="bubble">What should I do next after detection?</div>
-            </div>
-            <div class="message ai">
-              <div class="avatar"><i class="fas fa-robot"></i></div>
-              <div class="bubble">It’s recommended to consult with a urologist for further evaluation. Stay hydrated, avoid high-sodium foods, and monitor symptoms like pain or blood in urine.</div>
-            </div>
-          </div>
-          <div class="chat-input">
-            <input type="text" placeholder="Type your message..." />
-            <button><i class="fas fa-paper-plane"></i></button>
+            <button class="btn success" onclick="showChatbot()">💬 AI Health Assistant</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Background Decoration -->
-  <div class="decoration-bg"></div>
+  <!-- Floating Chatbot Button -->
+  <button class="chatbot-fab" id="chatbotFab">
+    <i class="fas fa-comments"></i>
+  </button>
+
+  <!-- Chatbot Sidebar -->
+  <div class="chatbot-sidebar" id="chatbotSidebar">
+    <div class="chatbot-header">
+      <h3>AI Kidney Health Assistant</h3>
+      <button class="close-chat" id="closeChatBtn">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="message ai">
+        <div class="avatar"><i class="fas fa-robot"></i></div>
+        <div class="bubble">Hello! I’m your AI Kidney Health Assistant. How can I help you today?</div>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="userMessage" placeholder="Ask about stones, treatment, or prevention..." />
+      <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+  </div>
 
   <script>
-    // Sama seperti sebelumnya — tidak berubah
+    // DOM Elements
     const uploadStep = document.getElementById('uploadStep');
     const previewStep = document.getElementById('previewStep');
     const resultStep = document.getElementById('resultStep');
-    const chatStep = document.getElementById('chatStep');
-
     const fileInput = document.getElementById('fileInput');
     const previewImage = document.getElementById('previewImage');
     const resultImage = document.getElementById('resultImage');
@@ -133,6 +121,7 @@
     const resultTitle = document.getElementById('resultTitle');
     const confidenceEl = document.getElementById('confidence');
 
+    // Upload handling
     document.getElementById('browseBtn').addEventListener('click', () => {
       fileInput.click();
     });
@@ -176,16 +165,33 @@
         resultImage.src = previewImage.src;
 
         const reports = [
-          { title: "Kidney stones detected", text: "Two kidney stones detected in the right kidney (4mm and 6mm). Located in the upper pole. Recommend urology consultation." },
-          { title: "Small calcification found", text: "One small calcification (3mm) in the left kidney. May be a stone or benign. Follow-up imaging advised." },
-          { title: "No stones detected", text: "No significant stones detected. Minor calcifications present. Clinical correlation recommended." },
-          { title: "Multiple stones detected", text: "Multiple bilateral stones detected. Largest: 8mm (right kidney). Hydration and medical management suggested." }
+          { 
+            title: "Kidney stones detected", 
+            text: "Two kidney stones detected in the right kidney (4mm and 6mm). Located in the upper pole. Recommend urology consultation." 
+          },
+          { 
+            title: "Small calcification found", 
+            text: "One small calcification (3mm) in the left kidney. May be a stone or benign. Follow-up imaging advised." 
+          },
+          { 
+            title: "No stones detected", 
+            text: "No significant stones detected. Minor calcifications present. Clinical correlation recommended." 
+          },
+          { 
+            title: "Multiple stones detected", 
+            text: "Multiple bilateral stones detected. Largest: 8mm (right kidney). Hydration and medical management suggested." 
+          }
         ];
         const confidences = ['89%', '92%', '85%', '94%'];
         const idx = Math.floor(Math.random() * reports.length);
         resultTitle.textContent = reports[idx].title;
         resultText.textContent = reports[idx].text;
         confidenceEl.textContent = confidences[idx];
+        // Ganti ikon berdasarkan hasil
+        const icon = resultTitle.textContent.toLowerCase().includes('no stones') 
+          ? 'fa-check-circle' 
+          : 'fa-exclamation-triangle';
+        document.querySelector('.result-icon i').className = `fas ${icon}`;
         switchToStep(resultStep);
       }, 2000);
     }
@@ -199,10 +205,9 @@
       fileInput.value = '';
       previewImage.src = '';
       resultImage.src = '';
-    }
-
-    function openChatAssistant() {
-      switchToStep(chatStep);
+      resultTitle.textContent = "Analyzing...";
+      resultText.textContent = "Please wait while AI processes your scan.";
+      confidenceEl.textContent = "—";
     }
 
     function goBack(stepId) {
@@ -210,7 +215,7 @@
     }
 
     function switchToStep(step) {
-      [uploadStep, previewStep, resultStep, chatStep].forEach(s => s.classList.remove('active'));
+      [uploadStep, previewStep, resultStep].forEach(s => s.classList.remove('active'));
       step.classList.add('active');
     }
 
@@ -218,7 +223,7 @@
       document.body.style.cursor = 'wait';
       const loader = document.createElement('div');
       loader.id = 'globalLoader';
-      loader.innerHTML = '<div class="loader-spinner"></div><p>Analyzing...</p>';
+      loader.innerHTML = '<div class="loader-spinner"></div><p>Analyzing your scan...</p>';
       document.body.appendChild(loader);
     }
 
@@ -226,6 +231,52 @@
       const loader = document.getElementById('globalLoader');
       if (loader) loader.remove();
       document.body.style.cursor = 'default';
+    }
+
+    // Chatbot Functions
+    function showChatbot() {
+      document.getElementById('chatbotSidebar').classList.add('active');
+    }
+
+    function hideChatbot() {
+      document.getElementById('chatbotSidebar').classList.remove('active');
+    }
+
+    document.getElementById('chatbotFab').addEventListener('click', showChatbot);
+    document.getElementById('closeChatBtn').addEventListener('click', hideChatbot);
+
+    document.getElementById('sendChatBtn').addEventListener('click', () => {
+      const input = document.getElementById('userMessage');
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      addMessage(msg, 'user');
+      input.value = '';
+
+      setTimeout(() => {
+        const responses = [
+          "Stay well-hydrated—drink at least 2–3 liters of water daily to help pass small stones.",
+          "Avoid foods high in oxalate like spinach, nuts, and chocolate if you're prone to calcium oxalate stones.",
+          "Pain management: Over-the-counter NSAIDs like ibuprofen can help with discomfort. Consult your doctor.",
+          "Follow up with a urologist within 1–2 weeks for imaging and treatment planning.",
+          "Small stones (<5mm) often pass naturally. Larger ones may require lithotripsy or surgery.",
+          "Limit sodium intake—high salt increases calcium in urine, raising stone risk."
+        ];
+        const reply = responses[Math.floor(Math.random() * responses.length)];
+        addMessage(reply, 'ai');
+      }, 800);
+    });
+
+    function addMessage(text, sender) {
+      const messagesContainer = document.getElementById('chatMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${sender}`;
+      messageDiv.innerHTML = `
+        <div class="avatar"><i class="fas fa-${sender === 'ai' ? 'robot' : 'user'}"></i></div>
+        <div class="bubble">${text}</div>
+      `;
+      messagesContainer.appendChild(messageDiv);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
   </script>
 </body>
