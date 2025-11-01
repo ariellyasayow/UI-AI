@@ -4,8 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kidney Stone AI</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <!-- Navbar -->
@@ -121,7 +122,6 @@
     const resultTitle = document.getElementById('resultTitle');
     const confidenceEl = document.getElementById('confidence');
 
-    // Upload handling
     document.getElementById('browseBtn').addEventListener('click', () => {
       fileInput.click();
     });
@@ -165,29 +165,16 @@
         resultImage.src = previewImage.src;
 
         const reports = [
-          { 
-            title: "Kidney stones detected", 
-            text: "Two kidney stones detected in the right kidney (4mm and 6mm). Located in the upper pole. Recommend urology consultation." 
-          },
-          { 
-            title: "Small calcification found", 
-            text: "One small calcification (3mm) in the left kidney. May be a stone or benign. Follow-up imaging advised." 
-          },
-          { 
-            title: "No stones detected", 
-            text: "No significant stones detected. Minor calcifications present. Clinical correlation recommended." 
-          },
-          { 
-            title: "Multiple stones detected", 
-            text: "Multiple bilateral stones detected. Largest: 8mm (right kidney). Hydration and medical management suggested." 
-          }
+          { title: "Kidney stones detected", text: "Two kidney stones detected in the right kidney (4mm and 6mm). Located in the upper pole. Recommend urology consultation." },
+          { title: "Small calcification found", text: "One small calcification (3mm) in the left kidney. May be a stone or benign. Follow-up imaging advised." },
+          { title: "No stones detected", text: "No significant stones detected. Minor calcifications present. Clinical correlation recommended." },
+          { title: "Multiple stones detected", text: "Multiple bilateral stones detected. Largest: 8mm (right kidney). Hydration and medical management suggested." }
         ];
         const confidences = ['89%', '92%', '85%', '94%'];
         const idx = Math.floor(Math.random() * reports.length);
         resultTitle.textContent = reports[idx].title;
         resultText.textContent = reports[idx].text;
         confidenceEl.textContent = confidences[idx];
-        // Ganti ikon berdasarkan hasil
         const icon = resultTitle.textContent.toLowerCase().includes('no stones') 
           ? 'fa-check-circle' 
           : 'fa-exclamation-triangle';
@@ -233,7 +220,6 @@
       document.body.style.cursor = 'default';
     }
 
-    // Chatbot Functions
     function showChatbot() {
       document.getElementById('chatbotSidebar').classList.add('active');
     }
@@ -249,10 +235,8 @@
       const input = document.getElementById('userMessage');
       const msg = input.value.trim();
       if (!msg) return;
-
       addMessage(msg, 'user');
       input.value = '';
-
       setTimeout(() => {
         const responses = [
           "Stay well-hydrated—drink at least 2–3 liters of water daily to help pass small stones.",

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kidney Stone AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Main Content Wrapper -->
+    <div class="main-content">
+        <!-- Step 1: Upload -->
+        <div class="step upload-step active" id="uploadStep">
+            <div class="container">
+                <header>
+                    <h1>Kidney Stone AI</h1>
+                    <p>Upload CT Scan atau X-Ray — AI kami akan membantu mendeteksi batu ginjal lebih cepat dan akurat.</p>
+                </header>
+
+                <section class="upload-section">
+                    <p>Drag & drop your CT scan image or click to browse.</p>
+                    <div class="upload-card" id="dropArea">
+                        <div class="upload-icon-container">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="#FFFFFF" viewBox="0 0 16 16">
+                                <path d="M7.5 1v3h1V1h1a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-1A.5.5 0 0 1 8 13V2H7.5v11h-1A.5.5 0 0 1 6 13V2a.5.5 0 0 1 .5-.5h1V1z"/>
+                                <path d="M4 14a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2zm2-1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-2z"/>
+                            </svg>
+                        </div>
+                        <p>Drag & drop an image here</p>
+                        <span>or</span>
+                        <button class="browse-btn" id="browseBtn">Browse</button>
+                        <input type="file" id="fileInput" accept="image/*" />
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Step 2: Preview -->
+        <div class="step preview-step" id="previewStep">
+            <div class="container">
+                <header>
+                    <button class="back-btn" onclick="goBack('uploadStep')">
+                        <i class="fas fa-arrow-left"></i> Back to Upload
+                    </button>
+                    <h1>Preview CT Scan</h1>
+                </header>
+                <section class="preview-section">
+                    <div class="preview-box">
+                        <img id="previewImage" alt="CT Scan Preview" />
+                        <div class="preview-actions">
+                            <button class="browse-btn outline" onclick="replaceImage()">Replace Image</button>
+                            <button class="browse-btn" onclick="analyzeImage()">Analyze Now</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Step 3: Result -->
+        <div class="step result-step" id="resultStep">
+            <div class="container">
+                <header>
+                    <button class="back-btn" onclick="goBack('previewStep')">
+                        <i class="fas fa-arrow-left"></i> Back to Preview
+                    </button>
+                    <h1>Analysis Result</h1>
+                </header>
+                <section class="result-section">
+                    <div class="result-box">
+                        <img id="resultImage" alt="Analyzed CT Scan" />
+                        <div class="result-info">
+                            <div class="result-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h3 id="resultTitle">Analyzing...</h3>
+                            <p id="resultText">Please wait while AI processes your scan.</p>
+                            <div class="confidence-badge">Confidence: <span id="confidence">—</span></div>
+                        </div>
+                        <div class="result-actions">
+                            <button class="browse-btn outline" onclick="resetToUpload()">Upload New Image</button>
+                            <button class="browse-btn success" onclick="openChatbot()">💬 AI Health Assistant</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <footer>
+            <div class="feature-card">
+                <i class="fas fa-stethoscope icon"></i>
+                <h3>Kidney Stone Detection</h3>
+                <p class="description">AI menganalisis CT/X-Ray untuk mendeteksi adanya batu ginjal dengan cepat dan akurat.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-map-marker-alt icon"></i>
+                <h3>Location Detection</h3>
+                <p class="description">Menentukan lokasi batu ginjal secara tepat untuk membantu tindakan medis.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-md icon"></i>
+                <h3>Medical Guidance</h3>
+                <p class="description">Memberikan rekomendasi medis awal terkait penanganan dan pencegahan batu ginjal.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Chatbot Sidebar -->
+    <div class="chatbot-sidebar" id="chatbotSidebar">
+        <div class="chatbot-header">
+            <h3>AI Kidney Health Assistant</h3>
+            <button class="close-chat" id="closeChatBtn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message ai">
+                <div class="avatar"><i class="fas fa-robot"></i></div>
+                <div class="bubble">Hello! I’m your AI Kidney Health Assistant. How can I help you today?</div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userMessage" placeholder="Ask about stones, treatment, or prevention..." />
+            <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Floating Chatbot Button -->
+    <button class="chatbot-fab" id="chatbotFab">
+        <i class="fas fa-comments"></i>
+    </button>
+
+    <script>
+        // DOM Elements
+        const uploadStep = document.getElementById('uploadStep');
+        const previewStep = document.getElementById('previewStep');
+        const resultStep = document.getElementById('resultStep');
+        const fileInput = document.getElementById('fileInput');
+        const previewImage = document.getElementById('previewImage');
+        const resultImage = document.getElementById('resultImage');
+        const resultText = document.getElementById('resultText');
+        const resultTitle = document.getElementById('resultTitle');
+        const confidenceEl = document.getElementById('confidence');
+
+        // Upload
+        document.getElementById('browseBtn').addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        const dropArea = document.getElementById('dropArea');
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.classList.add('drag-over');
+        });
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('drag-over');
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) handleFile(files[0]);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) handleFile(e.target.files[0]);
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Only image files are supported.');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewImage.src = e.target.result;
+                switchToStep(previewStep);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function analyzeImage() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                resultImage.src = previewImage.src;
+
+                const reports = [
+                    { title: "Kidney stones detected", text: "Two kidney stones detected in the right kidney (4mm and 6mm). Located in the upper pole. Recommend urology consultation." },
+                    { title: "Small calcification found", text: "One small calcification (3mm) in the left kidney. May be a stone or benign. Follow-up imaging advised." },
+                    { title: "No stones detected", text: "No significant stones detected. Minor calcifications present. Clinical correlation recommended." },
+                    { title: "Multiple stones detected", text: "Multiple bilateral stones detected. Largest: 8mm (right kidney). Hydration and medical management suggested." }
+                ];
+                const confidences = ['89%', '92%', '85%', '94%'];
+                const idx = Math.floor(Math.random() * reports.length);
+                resultTitle.textContent = reports[idx].title;
+                resultText.textContent = reports[idx].text;
+                confidenceEl.textContent = confidences[idx];
+                const icon = resultTitle.textContent.toLowerCase().includes('no stones') 
+                    ? 'fa-check-circle' 
+                    : 'fa-exclamation-triangle';
+                document.querySelector('.result-icon i').className = `fas ${icon}`;
+                switchToStep(resultStep);
+            }, 2000);
+        }
+
+        function replaceImage() {
+            fileInput.click();
+        }
+
+        function resetToUpload() {
+            switchToStep(uploadStep);
+            fileInput.value = '';
+            previewImage.src = '';
+            resultImage.src = '';
+            resultTitle.textContent = "Analyzing...";
+            resultText.textContent = "Please wait while AI processes your scan.";
+            confidenceEl.textContent = "—";
+        }
+
+        function goBack(stepId) {
+            switchToStep(document.getElementById(stepId));
+        }
+
+        function switchToStep(step) {
+            [uploadStep, previewStep, resultStep].forEach(s => s.classList.remove('active'));
+            step.classList.add('active');
+        }
+
+        function showLoading() {
+            document.body.style.cursor = 'wait';
+            const loader = document.createElement('div');
+            loader.id = 'globalLoader';
+            loader.innerHTML = '<div class="loader-spinner"></div><p>Analyzing your scan...</p>';
+            document.body.appendChild(loader);
+        }
+
+        function hideLoading() {
+            const loader = document.getElementById('globalLoader');
+            if (loader) loader.remove();
+            document.body.style.cursor = 'default';
+        }
+
+        // === Chatbot Functions (Logika Tetap Seperti Sebelumnya) ===
+        const chatbotFab = document.getElementById('chatbotFab');
+        const chatbotSidebar = document.getElementById('chatbotSidebar');
+        const closeChatBtn = document.getElementById('closeChatBtn');
+        const sendChatBtn = document.getElementById('sendChatBtn');
+        const userMessageInput = document.getElementById('userMessage');
+        const chatMessages = document.getElementById('chatMessages');
+
+        function openChatbot() {
+            chatbotSidebar.classList.add('active');
+            document.body.classList.add('chatbot-open');
+            chatbotFab.style.display = 'none'; // ✅ Hilang saat dibuka
+        }
+
+        function closeChatbot() {
+            chatbotSidebar.classList.remove('active');
+            document.body.classList.remove('chatbot-open');
+            chatbotFab.style.display = 'flex'; // ✅ Muncul kembali saat ditutup
+        }
+
+        chatbotFab.addEventListener('click', openChatbot);
+        closeChatBtn.addEventListener('click', closeChatbot);
+
+        function sendMessage() {
+            const msg = userMessageInput.value.trim();
+            if (!msg) return;
+            addMessage(msg, 'user');
+            userMessageInput.value = '';
+            setTimeout(() => {
+                const responses = [
+                    "Stay well-hydrated—drink at least 2–3 liters of water daily to help pass small stones.",
+                    "Avoid foods high in oxalate like spinach, nuts, and chocolate if you're prone to calcium oxalate stones.",
+                    "Pain management: Over-the-counter NSAIDs like ibuprofen can help with discomfort. Consult your doctor.",
+                    "Follow up with a urologist within 1–2 weeks for imaging and treatment planning.",
+                    "Small stones (<5mm) often pass naturally. Larger ones may require lithotripsy or surgery.",
+                    "Limit sodium intake—high salt increases calcium in urine, raising stone risk."
+                ];
+                const reply = responses[Math.floor(Math.random() * responses.length)];
+                addMessage(reply, 'ai');
+            }, 800);
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            messageDiv.innerHTML = `
+                <div class="avatar">
+                    <i class="fas fa-${sender === 'ai' ? 'robot' : 'user'}"></i>
+                </div>
+                <div class="bubble">${text}</div>
+            `;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        sendChatBtn.addEventListener('click', sendMessage);
+        userMessageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Tooltip untuk feature cards (pure CSS, tidak perlu JS)
+    </script>
+</body>
+</html>
